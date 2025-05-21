@@ -105,7 +105,7 @@ Preenche um formulário de cadastro de funcionário com dados gerados aleatoriam
 ## Contato
 
 Kaíque Fernandes  
-[GitHub](https://github.com/kfdev1996) | [LinkedIn](https://www.linkedin.com/in/kaiquef/)
+[GitHub](https://github.com/kfdev1996) | [LinkedIn](https://www.linkedin.com/in/kaiquefernandess/)
 
 ---
 
