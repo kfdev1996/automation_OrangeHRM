@@ -1,11 +1,11 @@
-
-  describe('Login no sistema', () => {
+describe('Login no sistema', () => {
 
   before(() => {
-    cy.login(); 
+    cy.login();
   });
 
   it('Preenchendo Informações', () => {
     cy.preencherInfo();
   });
-})
+
+});
