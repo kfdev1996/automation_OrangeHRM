@@ -66,6 +66,41 @@ Preenche um formulário de cadastro de funcionário com dados gerados aleatoriam
 
 ---
 
+## Testes Automatizados
+
+### ✅ `assertLabelVisiveis_OrangeHRM.cy.js`
+
+Este teste valida a **presença e visibilidade de labels** essenciais na aplicação OrangeHRM, garantindo que a interface esteja conforme o esperado.
+
+**Funcionalidades testadas:**
+
+- **Tela de busca do módulo PIM**:  
+  Verifica a presença e visibilidade das seguintes labels:  
+  - Employee Name  
+  - Employee Id  
+  - Employment Status  
+  - Include  
+  - Supervisor Name  
+  - Job Title  
+  - Sub Unit  
+
+- **Tela de adição de funcionário**:  
+  Após clicar no botão `Add`, verifica as labels:  
+  - Employee Full Name  
+  - Employee Id  
+
+**Como rodar apenas este teste:**
+
+```bash
+npx cypress run --spec "cypress/e2e/assertLabelVisiveis_OrangeHRM.cy.js"
+```
+
+**Destaque:**  
+- Uso de uma **função auxiliar** (`validarLabelsVisiveis`) para validar múltiplas labels de forma eficiente e limpa.
+- Estrutura otimizada com **beforeEach** para login e navegação.
+
+---
+
 ## Como usar
 
 1. Clone este repositório:
@@ -99,6 +134,7 @@ Preenche um formulário de cadastro de funcionário com dados gerados aleatoriam
 
 - O comando `preencherInfo` depende da estrutura atual da aplicação OrangeHRM e pode precisar de ajustes caso o layout ou identificadores mudem.
 - Os dados são gerados dinamicamente para garantir testes mais robustos e evitar conflitos com dados repetidos.
+- O teste `assertLabelVisiveis` assegura que os principais elementos da interface estejam visíveis, contribuindo para a qualidade da aplicação.
 
 ---
 
