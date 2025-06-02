@@ -34,6 +34,7 @@ describe('Validar Label - OrangeHRM', () => {
     ];
 
     validarLabelsVisiveis(labelsAdd);
+
   });
 
 });

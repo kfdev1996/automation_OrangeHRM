@@ -1,7 +1,7 @@
 
 # Automation OrangeHRM - Testes Automatizados com Cypress
 
-Este projeto contém scripts automatizados para o sistema **OrangeHRM** utilizando **Cypress** para testes end-to-end. Ele inclui comandos customizados para facilitar o login e o preenchimento de informações de funcionários de forma dinâmica usando dados aleatórios gerados pela biblioteca **Faker**.
+Este projeto contém scripts automatizados para o sistema **OrangeHRM** utilizando **Cypress** para testes end-to-end. Ele inclui comandos customizados para facilitar o login, logout e o preenchimento de informações de funcionários de forma dinâmica usando dados aleatórios gerados pela biblioteca **Faker**.
 
 ---
 
@@ -47,22 +47,57 @@ npm install cypress @faker-js/faker --save-dev
 
 Realiza o login no sistema OrangeHRM usando credenciais armazenadas nas variáveis de ambiente do Cypress.
 
+**Fluxo:**
+
 - Visita a página de login:  
   `https://opensource-demo.orangehrmlive.com/web/index.php/auth/login`
 - Preenche os campos de usuário e senha.
 - Submete o formulário.
 - Verifica se o redirecionamento para o dashboard foi realizado com sucesso.
+- Confirma a presença do texto **Dashboard** como validação adicional.
+
+---
 
 ### `preencherInfo`
 
 Preenche um formulário de cadastro de funcionário com dados gerados aleatoriamente.
 
+**Fluxo:**
+
 - Gera nome, sobrenome, número da carteira de motorista e datas aleatórias usando Faker.
 - Navega até o módulo de PIM (gestão de pessoal).
 - Adiciona um novo funcionário com os dados gerados.
 - Confirma se o cadastro foi salvo com sucesso.
-- Atualiza informações pessoais adicionais (número da carteira, validade da carteira, nacionalidade, estado civil, data de nascimento, gênero).
+- Atualiza informações pessoais adicionais:
+  - Número da carteira de motorista
+  - Validade da carteira
+  - Nacionalidade
+  - Estado civil
+  - Data de nascimento
+  - Gênero
 - Verifica se a atualização foi confirmada com sucesso.
+
+**Validações extras implementadas:**
+
+Após o cadastro, garante que os campos de nome foram preenchidos corretamente:
+
+```javascript
+cy.get('input[name="firstName"]').should('have.value', userData.firstName);
+cy.get('input[name="middleName"]').should('have.value', userData.middleName);
+cy.get('input[name="lastName"]').should('have.value', userData.lastName);
+```
+
+---
+
+### `logout`
+
+Realiza o logout da aplicação de forma segura.
+
+**Fluxo:**
+
+- Garante que o usuário logado é exibido (exemplo: **QA Engineer**).
+- Clica na opção de **Logout**.
+- Valida que houve redirecionamento para a tela de login.
 
 ---
 
@@ -95,7 +130,8 @@ Este teste valida a **presença e visibilidade de labels** essenciais na aplica�
 npx cypress run --spec "cypress/e2e/assertLabelVisiveis_OrangeHRM.cy.js"
 ```
 
-**Destaque:**  
+**Destaques:**
+
 - Uso de uma **função auxiliar** (`validarLabelsVisiveis`) para validar múltiplas labels de forma eficiente e limpa.
 - Estrutura otimizada com **beforeEach** para login e navegação.
 
@@ -104,29 +140,38 @@ npx cypress run --spec "cypress/e2e/assertLabelVisiveis_OrangeHRM.cy.js"
 ## Como usar
 
 1. Clone este repositório:
-   ```bash
-   git clone https://github.com/kfdev1996/automation_OrangeHRM.git
-   cd automation_OrangeHRM
-   ```
+
+```bash
+git clone https://github.com/kfdev1996/automation_OrangeHRM.git
+cd automation_OrangeHRM
+```
+
 2. Instale as dependências:
-   ```bash
-   npm install
-   ```
+
+```bash
+npm install
+```
+
 3. Configure suas variáveis de ambiente `usuario` e `senha` no arquivo `cypress.env.json` ou via variáveis de ambiente do sistema:
-   ```json
-   {
-     "usuario": "seu_usuario",
-     "senha": "sua_senha"
-   }
-   ```
+
+```json
+{
+  "usuario": "seu_usuario",
+  "senha": "sua_senha"
+}
+```
+
 4. Execute os testes com Cypress:
-   ```bash
-   npx cypress open
-   ```
-   ou
-   ```bash
-   npx cypress run
-   ```
+
+```bash
+npx cypress open
+```
+
+ou
+
+```bash
+npx cypress run
+```
 
 ---
 
@@ -146,3 +191,6 @@ Kaíque Fernandes
 ---
 
 **Este projeto é uma automação básica para fins de aprendizado e testes na aplicação OrangeHRM.**
+
+
+
