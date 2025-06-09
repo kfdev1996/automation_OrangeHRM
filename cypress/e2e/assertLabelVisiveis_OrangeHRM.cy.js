@@ -1,6 +1,5 @@
 describe('Validar Label - OrangeHRM', () => {
 
-  
   const validarLabelsVisiveis = (labels) => {
     labels.forEach(label => {
       cy.contains('label', label).should('be.visible');
@@ -31,10 +30,11 @@ describe('Validar Label - OrangeHRM', () => {
     const labelsAdd = [
       'Employee Full Name',
       'Employee Id'
-    ];
+    ];    
 
     validarLabelsVisiveis(labelsAdd);
-
-  });
-
+    
+    });
+    
 });
+
