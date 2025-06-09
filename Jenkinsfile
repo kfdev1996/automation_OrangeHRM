@@ -1,37 +1,42 @@
 pipeline {
     agent any
-    
+
+    tools {
+        nodejs 'NodeJS' 
+    }
+
     stages {
-        stage('Checkout') {
+        stage('Clonar projeto') {
             steps {
-               
-                checkout scm
+                git branch: 'main',
+                    url: 'git@github.com:kfdev1996/automation_OrangeHRM.git',
+                    credentialsId: 'GitHub SSH Key'
             }
         }
-        
-        stage('Install dependencies') {
+
+        stage('Instalar dependências') {
             steps {
-              
-                sh 'npm ci'
+                sh 'npm install'
             }
         }
-        
-        stage('Run Cypress tests') {
+
+        stage('Executar testes Cypress') {
             steps {
-                
-                sh 'npx cypress run'
+                sh './node_modules/.bin/cypress run'
             }
         }
     }
-    
+
     post {
         always {
-            
             junit 'cypress/results/*.xml' 
+            cleanWs()
+        }
+        success {
+            echo 'Testes concluídos com sucesso!'
         }
         failure {
-           
-            echo 'Os testes falharam, rever o código !'
+            echo 'Testes falharam!'
         }
     }
 }
