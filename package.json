@@ -1,0 +1,17 @@
+{
+  "name": "automation_orangehrm",
+  "version": "1.0.0",
+  "description": "Este projeto contém scripts automatizados para o sistema **OrangeHRM** utilizando **Cypress** para testes end-to-end. Ele inclui comandos customizados para facilitar o login, logout e o preenchimento de informações de funcionários de forma dinâmica usando dados aleatórios gerados pela biblioteca **Faker**.",
+  "main": "cypress.config.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@faker-js/faker": "^9.8.0",
+    "cypress": "^14.4.1",
+    "mocha-junit-reporter": "^2.2.1"
+  }
+}
