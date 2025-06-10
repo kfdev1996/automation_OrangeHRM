@@ -1,45 +1,39 @@
-
 pipeline {
     agent any
-
     tools {
         nodejs 'NodeJS' 
     }
-
     stages {
         stage('Clonar projeto') {
             steps {
-                git branch: 'main',
-                    url: 'https://github.com/kfdev1996/automation_OrangeHRM.git',
-                    credentialsId: 'GitHub SSH Key'
+                git branch: 'main', url: 'https://github.com/kfdev1996/automation_OrangeHRM.git'
             }
         }
-
         stage('Instalar dependências') {
             steps {
                 sh 'npm install'
-                sh 'npx cypress cache clear' 
+                sh 'npm install cypress --save-dev'
             }
         }
-
+        stage('Preparar Cypress') {
+            steps {
+                sh 'npx cypress cache clear'
+                sh 'npx cypress install'
+                sh 'chmod +x ./node_modules/.bin/cypress'
+            }
+        }
         stage('Executar testes Cypress') {
             steps {
-                sh 'npx cypress run' 
+                sh '''
+                    if ! command -v Xvfb &> /dev/null; then
+                        echo "Xvfb não está instalado. Instale-o com 'sudo apt-get install xvfb'."
+                        exit 1
+                    fi
+                    Xvfb :99 -screen 0 1280x720x24 &
+                    sleep 2
+                    DISPLAY=:99 npx cypress run
+                '''
             }
-        }
-    }
-
-    post {
-        always {
-            junit 'cypress/results/*.xml' 
-            archiveArtifacts artifacts: 'cypress/logs/**, cypress/results/**', allowEmptyArchive: true 
-            cleanWs() 
-        }
-        success {
-            echo 'Testes concluídos com sucesso!'
-        }
-        failure {
-            echo 'Testes falharam! Verifique os logs arquivados.'
         }
     }
 }
