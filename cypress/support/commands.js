@@ -1,12 +1,25 @@
 import { faker } from '@faker-js/faker';
 
 Cypress.Commands.add('login', () => {
-  cy.visit('https://opensource-demo.orangehrmlive.com/web/index.php/auth/login');
-  cy.get('input[name="username"]').type(Cypress.env('usuario'));
-  cy.get('input[name="password"]').type(Cypress.env('senha'), { log: false });
-  cy.get('button[type="submit"]').click();
-  cy.location('pathname').should('eq', '/web/index.php/dashboard/index');
-  cy.contains('Dashboard').should('be.visible');
+  cy.visit('/web/index.php/auth/login'); 
+
+  cy.log('Preenchendo login');
+  cy.get('input[name="username"]', { timeout: 15000 })
+    .should('be.visible')
+    .type(Cypress.env('usuario'));
+
+  cy.get('input[name="password"]', { timeout: 15000 })
+    .should('be.visible')
+    .type(Cypress.env('senha'));
+
+  cy.get('button[type="submit"]', { timeout: 15000 })
+    .should('be.visible')
+    .click();
+
+  cy.log('Verificando se login foi bem-sucedido');
+  cy.url({ timeout: 20000 }).should('include', '/dashboard');
+  cy.get('.oxd-topbar-header-title', { timeout: 10000 })
+    .should('contain', 'Dashboard');
 });
 
 Cypress.Commands.add('preencherInfo', (userData) => {

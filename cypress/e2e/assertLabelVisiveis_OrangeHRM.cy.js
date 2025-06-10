@@ -8,7 +8,7 @@ describe('Validar Label - OrangeHRM', () => {
 
   beforeEach(() => {
     cy.log('Realizando login');
-    cy.login(); // Assume que está em commands.js
+    cy.login(); 
     cy.log('Navegando para PIM');
     cy.contains('PIM', { timeout: 10000 })
       .should('be.visible')

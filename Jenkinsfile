@@ -21,11 +21,11 @@ pipeline {
 
         stage('Preparar Cypress') {
             steps {
-                // Corrige permissão do binário
+                
                 sh 'chmod +x ./node_modules/.bin/cypress'
-                // (Opcional) Limpa cache do Cypress
+                
                 sh 'npx cypress cache clear'
-                // Instala binários do Cypress (se ainda não estiverem instalados)
+                
                 sh 'npx cypress install'
             }
         }
