@@ -1,6 +1,7 @@
 pipeline {
     agent any
     tools {
+        nodejs 'Node 22.13.1' 
     }
     stages {
         stage('Clonar projeto') {
