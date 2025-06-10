@@ -5,6 +5,10 @@ pipeline {
         nodejs 'Node 22.13.1'
     }
 
+    environment {
+        CYPRESS_BASE_URL = 'http://localhost:8080' // ajuste se sua app rodar em outra porta
+    }
+
     stages {
         stage('Clonar projeto') {
             steps {
@@ -16,12 +20,19 @@ pipeline {
             steps {
                 sh 'npm install'
                 sh 'npm install cypress --save-dev'
+                sh 'npm install wait-on --save-dev'
+            }
+        }
+
+        stage('Iniciar aplicação') {
+            steps {
+                sh 'npm run start &'
+                sh 'npx wait-on $CYPRESS_BASE_URL'
             }
         }
 
         stage('Preparar Cypress') {
             steps {
-                sh 'chmod +x ./node_modules/.bin/cypress'
                 sh 'npx cypress cache clear'
                 sh 'npx cypress install'
             }
@@ -36,7 +47,7 @@ pipeline {
 
                     echo "Iniciando testes com Chrome em modo headless..."
                     xvfb-run --server-args="-screen 0 1280x1024x24" \
-                    npx cypress run --browser chrome --headless --config video=true,chromeWebSecurity=false
+                    npx cypress run --browser chrome --headless --config video=true,chromeWebSecurity=false,viewportWidth=1280,viewportHeight=720
                 '''
             }
         }
