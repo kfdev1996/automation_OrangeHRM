@@ -5,10 +5,6 @@ pipeline {
         nodejs 'Node 22.13.1'
     }
 
-    environment {
-        CYPRESS_BASE_URL = 'http://localhost:8080' // ajuste se sua app rodar em outra porta
-    }
-
     stages {
         stage('Clonar projeto') {
             steps {
@@ -20,14 +16,6 @@ pipeline {
             steps {
                 sh 'npm install'
                 sh 'npm install cypress --save-dev'
-                sh 'npm install wait-on --save-dev'
-            }
-        }
-
-        stage('Iniciar aplicação') {
-            steps {
-                sh 'npm run start &'
-                sh 'npx wait-on $CYPRESS_BASE_URL'
             }
         }
 
