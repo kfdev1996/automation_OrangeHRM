@@ -10,8 +10,8 @@ module.exports = defineConfig({
       
     },
     baseUrl: 'https://opensource-demo.orangehrmlive.com', 
-    defaultCommandTimeout: 10000, 
-    pageLoadTimeout: 30000, 
+    defaultCommandTimeout: 20000, 
+    pageLoadTimeout: 50000, 
     specPattern: 'cypress/e2e/**/*.cy.{js,jsx,ts,tsx}',
   },
 });
