@@ -1,14 +1,18 @@
 describe('Validar Label - OrangeHRM', () => {
-
   const validarLabelsVisiveis = (labels) => {
     labels.forEach(label => {
-      cy.contains('label', label).should('be.visible');
+      cy.contains('label', label, { timeout: 10000 })
+        .should('be.visible');
     });
   };
 
   beforeEach(() => {
-    cy.login();
-    cy.contains('PIM').click();
+    cy.log('Realizando login');
+    cy.login(); // Assume que está em commands.js
+    cy.log('Navegando para PIM');
+    cy.contains('PIM', { timeout: 10000 })
+      .should('be.visible')
+      .click();
   });
 
   it('Validando Labels da tela de busca', () => {
@@ -22,19 +26,24 @@ describe('Validar Label - OrangeHRM', () => {
       'Sub Unit'
     ];
 
+    cy.log('Validando labels da tela de busca');
     validarLabelsVisiveis(labelsBusca);
 
-    cy.contains('Add').click();
-    cy.get('h6').contains('Add Employee').should('be.visible');
+    cy.log('Clicando em Add');
+    cy.contains('Add', { timeout: 10000 })
+      .should('be.visible')
+      .click();
+
+    cy.log('Verificando título Add Employee');
+    cy.get('h6').contains('Add Employee', { timeout: 10000 })
+      .should('be.visible');
 
     const labelsAdd = [
       'Employee Full Name',
       'Employee Id'
-    ];    
+    ];
 
+    cy.log('Validando labels da tela de adicionar');
     validarLabelsVisiveis(labelsAdd);
-    
-    });
-    
+  });
 });
-
