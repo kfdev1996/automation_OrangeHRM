@@ -1,28 +1,33 @@
 import { faker } from '@faker-js/faker';
 
 Cypress.Commands.add('login', () => {
-  cy.visit('/web/index.php/auth/login');
+  cy.visit('https://opensource-demo.orangehrmlive.com/web/index.php/auth/login');
 
-  cy.log('Aguardando input de username aparecer');
-  cy.get('input[name="username"]', { timeout: 15000 })
-    .should('exist')
-    .and('be.visible')
-    .click()
+  cy.log('Aguardando completamente a tela de login');
+  cy.document().its('readyState').should('eq', 'complete');
+
+  cy.get('input[name="username"]', { timeout: 20000 }).should(($el) => {
+    expect($el.length).to.be.greaterThan(0);
+  });
+
+  cy.get('input[name="username"]', { timeout: 20000 })
+    .should('be.visible')
+    .and('not.be.disabled')
+    .click({ force: true })
     .type(Cypress.env('usuario'), { delay: 50 });
 
-  cy.get('input[name="password"]', { timeout: 15000 })
-    .should('exist')
-    .and('be.visible')
+  cy.get('input[name="password"]', { timeout: 20000 })
+    .should('be.visible')
+    .and('not.be.disabled')
     .type(Cypress.env('senha'), { delay: 50 });
 
-  cy.get('button[type="submit"]', { timeout: 15000 })
-    .should('exist')
-    .and('be.visible')
+  cy.get('button[type="submit"]', { timeout: 20000 })
+    .should('be.visible')
     .click();
 
-  cy.log('Verificando se login foi bem-sucedido');
   cy.url({ timeout: 20000 }).should('include', '/dashboard');
 });
+
 
 
 Cypress.Commands.add('preencherInfo', (userData) => {
