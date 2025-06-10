@@ -2,33 +2,12 @@ import { faker } from '@faker-js/faker';
 
 Cypress.Commands.add('login', () => {
   cy.visit('https://opensource-demo.orangehrmlive.com/web/index.php/auth/login');
-
-  cy.log('Aguardando completamente a tela de login');
-  cy.document().its('readyState').should('eq', 'complete');
-
-  cy.get('input[name="username"]', { timeout: 20000 }).should(($el) => {
-    expect($el.length).to.be.greaterThan(0);
-  });
-
-  cy.get('input[name="username"]', { timeout: 20000 })
-    .should('be.visible')
-    .and('not.be.disabled')
-    .click({ force: true })
-    .type(Cypress.env('usuario'), { delay: 50 });
-
-  cy.get('input[name="password"]', { timeout: 20000 })
-    .should('be.visible')
-    .and('not.be.disabled')
-    .type(Cypress.env('senha'), { delay: 50 });
-
-  cy.get('button[type="submit"]', { timeout: 20000 })
-    .should('be.visible')
-    .click();
-
-  cy.url({ timeout: 20000 }).should('include', '/dashboard');
+  cy.get('input[name="username"]').type(Cypress.env('usuario'));
+  cy.get('input[name="password"]').type(Cypress.env('senha'), { log: false });
+  cy.get('button[type="submit"]').click();
+  cy.location('pathname').should('eq', '/web/index.php/dashboard/index');
+  cy.contains('Dashboard').should('be.visible');
 });
-
-
 
 Cypress.Commands.add('preencherInfo', (userData) => {
   cy.get('a[href="/web/index.php/pim/viewPimModule"]').click();

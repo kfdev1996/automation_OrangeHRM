@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<testsuites name="Mocha Tests" time="18.854" tests="1" failures="0">
-  <testsuite name="Root Suite" timestamp="2025-06-10T18:45:42" tests="0" file="cypress\e2e\automation_OrangeHRM.cy.js" time="0.000" failures="0">
-  </testsuite>
-  <testsuite name="Fluxo de cadastro no OrangeHRM" timestamp="2025-06-10T18:45:42" tests="1" time="18.851" failures="0">
-    <testcase name="Fluxo de cadastro no OrangeHRM Deve realizar o cadastro de um novo colaborador com sucesso" time="18.779" classname="Deve realizar o cadastro de um novo colaborador com sucesso">
-    </testcase>
-  </testsuite>
-</testsuites>

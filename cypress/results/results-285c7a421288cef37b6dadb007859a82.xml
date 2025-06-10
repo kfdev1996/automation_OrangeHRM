@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<testsuites name="Mocha Tests" time="10.502" tests="1" failures="0">
-  <testsuite name="Root Suite" timestamp="2025-06-10T19:35:33" tests="0" file="cypress\e2e\automation_OrangeHRM_nohappy.cy.js" time="0.000" failures="0">
-  </testsuite>
-  <testsuite name="Fluxo não feliz - Cadastro sem First Name" timestamp="2025-06-10T19:35:33" tests="1" time="10.501" failures="0">
-    <testcase name="Fluxo não feliz - Cadastro sem First Name Deve exibir erro ao tentar cadastrar colaborador sem First Name" time="10.356" classname="Deve exibir erro ao tentar cadastrar colaborador sem First Name">
-    </testcase>
-  </testsuite>
-</testsuites>
