@@ -1,7 +1,7 @@
 pipeline {
     agent any
     tools {
-        nodejs 'Node 22.13.1' 
+        nodejs 'Node 22.13.1' // Ajuste para o nome da instalação configurada
     }
     stages {
         stage('Clonar projeto') {
@@ -17,9 +17,9 @@ pipeline {
         }
         stage('Preparar Cypress') {
             steps {
+                sh 'chmod +x ./node_modules/.bin/cypress'
                 sh 'npx cypress cache clear'
                 sh 'npx cypress install'
-                sh 'chmod +x ./node_modules/.bin/cypress'
             }
         }
         stage('Executar testes Cypress') {
