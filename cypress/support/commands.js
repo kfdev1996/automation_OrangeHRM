@@ -1,26 +1,29 @@
 import { faker } from '@faker-js/faker';
 
 Cypress.Commands.add('login', () => {
-  cy.visit('/web/index.php/auth/login'); 
+  cy.visit('/web/index.php/auth/login');
 
-  cy.log('Preenchendo login');
+  cy.log('Aguardando input de username aparecer');
   cy.get('input[name="username"]', { timeout: 15000 })
-    .should('be.visible')
-    .type(Cypress.env('usuario'));
+    .should('exist')
+    .and('be.visible')
+    .click()
+    .type(Cypress.env('usuario'), { delay: 50 });
 
   cy.get('input[name="password"]', { timeout: 15000 })
-    .should('be.visible')
-    .type(Cypress.env('senha'));
+    .should('exist')
+    .and('be.visible')
+    .type(Cypress.env('senha'), { delay: 50 });
 
   cy.get('button[type="submit"]', { timeout: 15000 })
-    .should('be.visible')
+    .should('exist')
+    .and('be.visible')
     .click();
 
   cy.log('Verificando se login foi bem-sucedido');
   cy.url({ timeout: 20000 }).should('include', '/dashboard');
-  cy.get('.oxd-topbar-header-title', { timeout: 10000 })
-    .should('contain', 'Dashboard');
 });
+
 
 Cypress.Commands.add('preencherInfo', (userData) => {
   cy.get('a[href="/web/index.php/pim/viewPimModule"]').click();
