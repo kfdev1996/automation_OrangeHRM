@@ -1,3 +1,4 @@
+
 pipeline {
     agent any
 
@@ -9,7 +10,7 @@ pipeline {
         stage('Clonar projeto') {
             steps {
                 git branch: 'main',
-                    url: 'git@github.com:kfdev1996/automation_OrangeHRM.git',
+                    url: 'https://github.com/kfdev1996/automation_OrangeHRM.git',
                     credentialsId: 'GitHub SSH Key'
             }
         }
