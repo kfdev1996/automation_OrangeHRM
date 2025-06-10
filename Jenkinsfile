@@ -3,6 +3,9 @@ pipeline {
     tools {
         nodejs 'Node 22.13.1'
     }
+    environment {
+        CHROME_BIN = '/usr/bin/google-chrome' 
+    }
     stages {
         stage('Clonar projeto') {
             steps {
@@ -15,10 +18,10 @@ pipeline {
                 sh 'npm install cypress --save-dev'
             }
         }
-        stage('Instalar Xvfb') {
+        stage('Instalar dependências do sistema') {
             steps {
-                sh 'sudo apt-get update || true' // Ignora falha se já atualizado
-                sh 'sudo apt-get install -y xvfb || true' // Instala Xvfb, ignora se já instalado
+                sh 'sudo apt-get update || true'
+                sh 'sudo apt-get install -y xvfb libgtk2.0-0 libgtk-3-0 libgbm-dev libnotify-dev libgconf-2-4 libnss3 libxss1 libasound2 libxtst6 xauth x11-apps google-chrome-stable || true'
             }
         }
         stage('Preparar Cypress') {
@@ -32,11 +35,10 @@ pipeline {
             steps {
                 sh '''
                     export TERM=xterm
-                    if ! command -v Xvfb >/dev/null; then
-                        echo "Xvfb não está instalado. Instale-o com 'sudo apt-get install xvfb'."
-                        exit 1
-                    fi
-                    xvfb-run --server-args="-screen 0 1280x1024x24" npx cypress run --browser electron --headless --config video=true,chromeWebSecurity=false
+                    echo "Iniciando testes com Chrome em modo headless..."
+                    xvfb-run --server-args="-screen 0 1280x1024x24" \
+                        npx cypress run --browser chrome --headless \
+                        --config video=true,chromeWebSecurity=false
                 '''
             }
         }
